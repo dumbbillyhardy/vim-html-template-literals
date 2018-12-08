@@ -5,7 +5,7 @@
 " Save the current JavaScript indentexpr.
 let b:litHtmlOriginalIndentExpression = &indentexpr
 
-" import xml indent
+" import html indent
 if exists('b:did_indent')
   let s:did_indent=b:did_indent
   unlet b:did_indent
@@ -13,23 +13,14 @@ endif
 exe 'runtime! indent/html.vim'
 if exists('s:did_indent')
   let b:did_indent=s:did_indent
-endif
-
-" import css indent
-if exists('b:did_indent')
-  let s:did_indent=b:did_indent
-  unlet b:did_indent
-endif
-exe 'runtime! indent/css.vim'
-if exists('s:did_indent')
-  let b:did_indent=s:did_indent
+  unlet s:did_indent
 endif
 
 setlocal indentexpr=ComputeLitHtmlIndent()
 
 " JS indentkeys
 setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e
-" XML indentkeys
+" HTML indentkeys
 setlocal indentkeys+=*<Return>,<>>,<<>,/
 " lit-html indentkeys
 setlocal indentkeys+=`
@@ -59,7 +50,7 @@ fu! IsSynstackCss(synstack)
   return get(a:synstack, -1) =~# '^css'
 endfu
 
-" Does synstack end with an xml syntax attribute
+" Does synstack end with an html syntax attribute
 fu! IsSynstackHtml(synstack)
   return get(a:synstack, -1) =~# '^html'
 endfu
@@ -167,7 +158,7 @@ function! s:SynAt(l,c) " from $VIMRUNTIME/indent/javascript.vim
 endfunction
 
 if exists('g:VHTL_debugging')
-  set debug=msg " show errors in indentexpr
+  " set debug=msg " show errors in indentexpr
 endif
 " Make debug log. You can view these logs using ':messages'
 fu! s:debug(str)
